@@ -5,8 +5,8 @@ import { menu, whatsappLink } from "@/config/site";
 import { cn } from "@/lib/utils";
 
 export function MenuSection() {
-  const [active, setActive] = useState(menu[0].id);
-  const current = menu.find((c) => c.id === active) ?? menu[0];
+  const [active, setActive] = useState(menu[0]!.id);
+  const current = menu.find((c) => c.id === active) ?? menu[0]!;
 
   return (
     <section id="cardapio" className="py-16 sm:py-24">
