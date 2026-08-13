@@ -13,6 +13,8 @@ import { Location } from "@/components/Location";
 import { FinalCta } from "@/components/FinalCta";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
+import { CartSheet } from "@/components/CartSheet";
+import { CartProvider } from "@/context/cart";
 
 const TITLE = "Açaí Tropical | Açaí, Sorvetes e Milk-Shakes";
 const DESCRIPTION =
@@ -81,22 +83,26 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <main>
-        <Hero />
-        <MenuSection />
-        <Builder />
-        <Combos />
-        <Features />
-        <Testimonials />
-        <Gallery />
-        <Delivery />
-        <Location />
-        <FinalCta />
-      </main>
-      <Footer />
-      <WhatsAppFloat />
-    </div>
+    <CartProvider>
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main>
+          <Hero />
+          <MenuSection />
+          <Builder />
+          <Combos />
+          <Features />
+          <Testimonials />
+          <Gallery />
+          <Delivery />
+          <Location />
+          <FinalCta />
+        </main>
+        <Footer />
+        <WhatsAppFloat />
+        <CartSheet />
+      </div>
+    </CartProvider>
   );
 }
+
