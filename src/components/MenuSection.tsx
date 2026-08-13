@@ -1,12 +1,16 @@
 import { useState } from "react";
-import { CtaLink } from "@/components/Cta";
+import { ShoppingBag } from "lucide-react";
+import { CtaButton } from "@/components/Cta";
 import { Reveal } from "@/components/Reveal";
-import { menu, whatsappLink } from "@/config/site";
+import { menu } from "@/config/site";
+import { parsePrice, useCart } from "@/context/cart";
 import { cn } from "@/lib/utils";
 
 export function MenuSection() {
   const [active, setActive] = useState(menu[0]!.id);
   const current = menu.find((c) => c.id === active) ?? menu[0]!;
+  const { add, setOpen } = useCart();
+
 
   return (
     <section id="cardapio" className="py-16 sm:py-24">
