@@ -1,8 +1,12 @@
-import { CtaLink } from "@/components/Cta";
+import { ShoppingBag } from "lucide-react";
+import { CtaButton } from "@/components/Cta";
 import { Reveal } from "@/components/Reveal";
-import { combos, whatsappLink } from "@/config/site";
+import { combos } from "@/config/site";
+import { parsePrice, useCart } from "@/context/cart";
 
 export function Combos() {
+  const { add, setOpen } = useCart();
+
   return (
     <section id="combos" className="py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">

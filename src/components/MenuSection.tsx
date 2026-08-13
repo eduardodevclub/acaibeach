@@ -77,18 +77,24 @@ export function MenuSection() {
               <div className="flex flex-1 flex-col p-5">
                 <h3 className="font-display text-lg font-extrabold">{p.name}</h3>
                 <p className="mt-1.5 flex-1 text-sm text-muted-foreground">{p.description}</p>
-                <CtaLink
-                  variant="whatsapp"
+                <CtaButton
+                  variant="acai"
                   size="md"
                   className="mt-4 w-full"
-                  href={whatsappLink(
-                    `Olá! Quero pedir 1x ${p.name} (${p.price}). 🍧`,
-                  )}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  onClick={() => {
+                    add({
+                      id: `menu-${p.name}`,
+                      name: p.name,
+                      unitPrice: parsePrice(p.price),
+                      image: p.image,
+                    });
+                    setOpen(true);
+                  }}
                 >
-                  Pedir agora
-                </CtaLink>
+                  <ShoppingBag className="size-4" aria-hidden="true" />
+                  Adicionar
+                </CtaButton>
+
               </div>
             </Reveal>
           ))}
