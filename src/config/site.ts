@@ -159,7 +159,19 @@ export const combos = [
 ];
 
 export const sizes = ["300ml", "500ml", "700ml", "1 litro"];
+export const sizePrices: Record<string, number> = {
+  "300ml": 14.9,
+  "500ml": 19.9,
+  "700ml": 24.9,
+  "1 litro": 34.9,
+};
 export const bases = ["Açaí", "Açaí + Cupuaçu", "Açaí + Sorvete"];
+export const basePrices: Record<string, number> = {
+  "Açaí": 0,
+  "Açaí + Cupuaçu": 3,
+  "Açaí + Sorvete": 4,
+};
+export const toppingPrice = 2;
 export const toppings = [
   "Morango",
   "Banana",

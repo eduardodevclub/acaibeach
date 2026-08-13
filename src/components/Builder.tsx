@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Check } from "lucide-react";
-import { CtaLink } from "@/components/Cta";
+import { Check, ShoppingBag } from "lucide-react";
+import { CtaButton } from "@/components/Cta";
 import { Reveal } from "@/components/Reveal";
-import { bases, sizes, toppings, whatsappLink } from "@/config/site";
+import { basePrices, bases, sizePrices, sizes, toppingPrice, toppings } from "@/config/site";
+import { formatBRL, useCart } from "@/context/cart";
 import { cn } from "@/lib/utils";
 
 function Chip({
