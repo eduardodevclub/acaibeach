@@ -105,7 +105,7 @@ export function Builder() {
             </div>
           </Step>
 
-          <Step n={4} title="Finalize seu pedido" last>
+          <Step n={4} title="Adicione ao carrinho" last>
             <div className="rounded-3xl bg-secondary p-5">
               <p className="text-sm font-bold text-secondary-foreground">
                 {size} · {base} · {picked.length} acompanhamento
@@ -114,18 +114,21 @@ export function Builder() {
               <p className="mt-1 text-sm text-muted-foreground">
                 {picked.length ? picked.join(" · ") : "Escolha seus acompanhamentos acima"}
               </p>
-              <CtaLink
-                variant="whatsapp"
+              <p className="mt-3 font-display text-3xl font-extrabold text-gradient-acai">
+                {formatBRL(unitPrice)}
+              </p>
+              <CtaButton
+                variant="acai"
                 size="lg"
                 className="mt-4 w-full sm:w-auto"
-                href={whatsappLink(message)}
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={addToCart}
               >
-                Montar meu açaí
-              </CtaLink>
+                <ShoppingBag className="size-5" aria-hidden="true" />
+                Adicionar ao carrinho
+              </CtaButton>
             </div>
           </Step>
+
         </Reveal>
       </div>
     </section>
