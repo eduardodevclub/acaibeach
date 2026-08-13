@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { CartButton } from "@/components/CartSheet";
 import { CtaLink } from "@/components/Cta";
 import { Logo } from "@/components/Logo";
 import { whatsappLink } from "@/config/site";
@@ -49,6 +50,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <CartButton />
           <CtaLink
             variant="whatsapp"
             size="sm"

@@ -1,8 +1,12 @@
-import { CtaLink } from "@/components/Cta";
+import { ShoppingBag } from "lucide-react";
+import { CtaButton } from "@/components/Cta";
 import { Reveal } from "@/components/Reveal";
-import { combos, whatsappLink } from "@/config/site";
+import { combos } from "@/config/site";
+import { parsePrice, useCart } from "@/context/cart";
 
 export function Combos() {
+  const { add, setOpen } = useCart();
+
   return (
     <section id="combos" className="py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
@@ -39,16 +43,24 @@ export function Combos() {
                 <p className="mt-4 font-display text-3xl font-extrabold text-gradient-acai">
                   {c.price}
                 </p>
-                <CtaLink
+                <CtaButton
                   variant="sunset"
                   size="lg"
                   className="mt-4 w-full"
-                  href={whatsappLink(`Olá! Quero o ${c.name} (${c.price}). 🍧`)}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  onClick={() => {
+                    add({
+                      id: `combo-${c.name}`,
+                      name: c.name,
+                      unitPrice: parsePrice(c.price),
+                      image: c.image,
+                    });
+                    setOpen(true);
+                  }}
                 >
-                  Quero esse combo
-                </CtaLink>
+                  <ShoppingBag className="size-5" aria-hidden="true" />
+                  Adicionar ao carrinho
+                </CtaButton>
+
               </div>
             </Reveal>
           ))}

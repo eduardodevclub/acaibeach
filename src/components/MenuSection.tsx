@@ -1,12 +1,16 @@
 import { useState } from "react";
-import { CtaLink } from "@/components/Cta";
+import { ShoppingBag } from "lucide-react";
+import { CtaButton } from "@/components/Cta";
 import { Reveal } from "@/components/Reveal";
-import { menu, whatsappLink } from "@/config/site";
+import { menu } from "@/config/site";
+import { parsePrice, useCart } from "@/context/cart";
 import { cn } from "@/lib/utils";
 
 export function MenuSection() {
   const [active, setActive] = useState(menu[0]!.id);
   const current = menu.find((c) => c.id === active) ?? menu[0]!;
+  const { add, setOpen } = useCart();
+
 
   return (
     <section id="cardapio" className="py-16 sm:py-24">
@@ -73,18 +77,24 @@ export function MenuSection() {
               <div className="flex flex-1 flex-col p-5">
                 <h3 className="font-display text-lg font-extrabold">{p.name}</h3>
                 <p className="mt-1.5 flex-1 text-sm text-muted-foreground">{p.description}</p>
-                <CtaLink
-                  variant="whatsapp"
+                <CtaButton
+                  variant="acai"
                   size="md"
                   className="mt-4 w-full"
-                  href={whatsappLink(
-                    `Olá! Quero pedir 1x ${p.name} (${p.price}). 🍧`,
-                  )}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  onClick={() => {
+                    add({
+                      id: `menu-${p.name}`,
+                      name: p.name,
+                      unitPrice: parsePrice(p.price),
+                      image: p.image,
+                    });
+                    setOpen(true);
+                  }}
                 >
-                  Pedir agora
-                </CtaLink>
+                  <ShoppingBag className="size-4" aria-hidden="true" />
+                  Adicionar
+                </CtaButton>
+
               </div>
             </Reveal>
           ))}

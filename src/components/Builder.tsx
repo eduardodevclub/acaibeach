@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Check } from "lucide-react";
-import { CtaLink } from "@/components/Cta";
+import { Check, ShoppingBag } from "lucide-react";
+import { CtaButton } from "@/components/Cta";
 import { Reveal } from "@/components/Reveal";
-import { bases, sizes, toppings, whatsappLink } from "@/config/site";
+import { basePrices, bases, sizePrices, sizes, toppingPrice, toppings } from "@/config/site";
+import { formatBRL, useCart } from "@/context/cart";
 import { cn } from "@/lib/utils";
 
 function Chip({
@@ -36,13 +37,26 @@ export function Builder() {
   const [size, setSize] = useState(sizes[1]!);
   const [base, setBase] = useState(bases[0]!);
   const [picked, setPicked] = useState<string[]>(["Granola", "Morango"]);
+  const { add, setOpen } = useCart();
 
   const toggle = (t: string) =>
     setPicked((prev) => (prev.includes(t) ? prev.filter((p) => p !== t) : [...prev, t]));
 
-  const message = `Olá! Quero montar meu açaí 🍧\n• Tamanho: ${size}\n• Base: ${base}\n• Acompanhamentos: ${
-    picked.length ? picked.join(", ") : "sem acompanhamentos"
-  }`;
+  const unitPrice =
+    (sizePrices[size] ?? 0) + (basePrices[base] ?? 0) + picked.length * toppingPrice;
+
+  const details = `${base}${picked.length ? ` · ${picked.join(", ")}` : ""}`;
+
+  const addToCart = () => {
+    add({
+      id: `montado-${size}-${base}-${[...picked].sort().join("|")}`,
+      name: `Açaí montado ${size}`,
+      details,
+      unitPrice,
+    });
+    setOpen(true);
+  };
+
 
   return (
     <section id="monte" className="relative overflow-hidden py-16 sm:py-24">
@@ -91,7 +105,7 @@ export function Builder() {
             </div>
           </Step>
 
-          <Step n={4} title="Finalize seu pedido" last>
+          <Step n={4} title="Adicione ao carrinho" last>
             <div className="rounded-3xl bg-secondary p-5">
               <p className="text-sm font-bold text-secondary-foreground">
                 {size} · {base} · {picked.length} acompanhamento
@@ -100,18 +114,21 @@ export function Builder() {
               <p className="mt-1 text-sm text-muted-foreground">
                 {picked.length ? picked.join(" · ") : "Escolha seus acompanhamentos acima"}
               </p>
-              <CtaLink
-                variant="whatsapp"
+              <p className="mt-3 font-display text-3xl font-extrabold text-gradient-acai">
+                {formatBRL(unitPrice)}
+              </p>
+              <CtaButton
+                variant="acai"
                 size="lg"
                 className="mt-4 w-full sm:w-auto"
-                href={whatsappLink(message)}
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={addToCart}
               >
-                Montar meu açaí
-              </CtaLink>
+                <ShoppingBag className="size-5" aria-hidden="true" />
+                Adicionar ao carrinho
+              </CtaButton>
             </div>
           </Step>
+
         </Reveal>
       </div>
     </section>
