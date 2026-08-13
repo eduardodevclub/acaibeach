@@ -37,13 +37,26 @@ export function Builder() {
   const [size, setSize] = useState(sizes[1]!);
   const [base, setBase] = useState(bases[0]!);
   const [picked, setPicked] = useState<string[]>(["Granola", "Morango"]);
+  const { add, setOpen } = useCart();
 
   const toggle = (t: string) =>
     setPicked((prev) => (prev.includes(t) ? prev.filter((p) => p !== t) : [...prev, t]));
 
-  const message = `Olá! Quero montar meu açaí 🍧\n• Tamanho: ${size}\n• Base: ${base}\n• Acompanhamentos: ${
-    picked.length ? picked.join(", ") : "sem acompanhamentos"
-  }`;
+  const unitPrice =
+    (sizePrices[size] ?? 0) + (basePrices[base] ?? 0) + picked.length * toppingPrice;
+
+  const details = `${base}${picked.length ? ` · ${picked.join(", ")}` : ""}`;
+
+  const addToCart = () => {
+    add({
+      id: `montado-${size}-${base}-${[...picked].sort().join("|")}`,
+      name: `Açaí montado ${size}`,
+      details,
+      unitPrice,
+    });
+    setOpen(true);
+  };
+
 
   return (
     <section id="monte" className="relative overflow-hidden py-16 sm:py-24">
